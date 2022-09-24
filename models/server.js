@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const router = require('../routes/user');
+const { dbConnection } = require('../database/config');
 
 class Server {
 
@@ -10,6 +11,10 @@ class Server {
        this.port = process.env.PORT;
 
        this.app = express();
+
+       //Conxion con base de datos 
+       this.connectDB();
+      
        
        //Middlewares
        this.middlewares(); 
@@ -40,10 +45,20 @@ class Server {
         this.app.use('/api/users', require('../routes/user'));
     }
 
+    async connectDB() {
+        await dbConnection();
+    }  
+
 
     init(){
-        this.app.listen(this.port);
+
+        this.app.listen(this.port, () =>{
+            console.log(`Server in port ${this.port}`);
+        });
+        
     }
+
+   
 
 }
 
