@@ -12,6 +12,10 @@ class Server {
 
        this.app = express();
 
+       //Routes path 
+       this.loginPath = '/api/auth';
+       this.usersPath = '/api/users';
+
        //Conxion con base de datos 
        this.connectDB();
       
@@ -42,7 +46,8 @@ class Server {
 
     routes(){
 
-        this.app.use('/api/users', require('../routes/user'));
+        this.app.use( this.loginPath, require('../routes/auth'));
+        this.app.use( this.usersPath, require('../routes/user'));
     }
 
     async connectDB() {
