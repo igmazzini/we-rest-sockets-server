@@ -4,11 +4,76 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso denegado</title>
+    <title>Sign in</title>
 </head>
 <body>
 
-    <h1>Acceso denegado</h1>
+    <!-- data-login_uri="https://your.domain/your_login_endpoint" -->
+
+    <div id="g_id_onload"
+        data-client_id="279693859280-hhmu7uu60rbdtr6vof68hfodaegm28ih.apps.googleusercontent.com"     
+        data-callback="handleCredentialResponse"   
+        data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left">
+    </div>
+
+    <button id="signout" style="margin-top:15px">
+        Signout
+    </button>
     
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <script>
+        function handleCredentialResponse(response) {
+            // decodeJwtResponse() is a custom function defined by you
+            // to decode the credential response.
+            /* const responsePayload = decodeJwtResponse(response.credential);
+
+            console.log("ID: " + responsePayload.sub);
+            console.log('Full Name: ' + responsePayload.name);
+            console.log('Given Name: ' + responsePayload.given_name);
+            console.log('Family Name: ' + responsePayload.family_name);
+            console.log("Image URL: " + responsePayload.picture);
+            console.log("Email: " + responsePayload.email); */
+
+            //console.log('ID TOKEN',response.credential)
+
+            let myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            const requestParams = {
+                method:'POST',
+                headers:myHeaders,               
+                body: JSON.stringify({ id_token:response.credential })
+            }
+
+            const request = new Request('http://localhost:8081/api/auth/google',requestParams);
+
+            fetch(request)
+                .then( resp => resp.json() )
+                .then( resp =>{
+                    console.log(resp);
+                    localStorage.setItem('email',resp.user.email);
+                })
+                .catch( console.warn );
+        }
+
+        const button = document.getElementById('signout');
+        button.onclick = () =>{
+            google.accounts.id.disableAutoSelect();
+
+            google.accounts.id.revoke( localStorage.getItem('email'), done =>{
+                localStorage.clear();
+                location.reload();
+            } );
+        }
+    </script>
 </body>
 </html>
