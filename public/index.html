@@ -54,7 +54,11 @@
                 body: JSON.stringify({ id_token:response.credential })
             }
 
-            const request = new Request('http://localhost:8081/api/auth/google',requestParams);
+            let url = (window.location.hostname.includes('localhost') )
+                ? 'http://localhost:8081/api/auth/google'
+                : 'https:/ig-node-restserver.herokuapp.com//api/auth/google'
+
+            const request = new Request(url,requestParams);
 
             fetch(request)
                 .then( resp => resp.json() )
