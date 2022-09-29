@@ -1,5 +1,5 @@
-const Role = require('../models/role');
-const User = require('../models/user');
+const { Category, Role, User, Product } = require('../models');
+
 
 const roleValidator = async (role = '') =>{
 
@@ -19,9 +19,28 @@ const emailValidator = async( email = '') => {
     }
 
 }
-const idValidator = async( id = '') => {
+const userIdValidator = async( id = '') => {
 
     const idExists = await User.findById(id);   
+
+    if( !idExists ){
+        throw new Error(`ID: ${id} does not exists`);
+    }
+
+}
+
+const categoryIdValidator = async( id = '') => {
+
+    const idExists = await Category.findById(id);   
+
+    if( !idExists ){
+        throw new Error(`ID: ${id} does not exists`);
+    }
+
+}
+const productIdValidator = async( id = '') => {
+
+    const idExists = await  Product.findById(id);   
 
     if( !idExists ){
         throw new Error(`ID: ${id} does not exists`);
@@ -36,5 +55,7 @@ const idValidator = async( id = '') => {
 module.exports = {
     roleValidator,
     emailValidator,
-    idValidator
+    userIdValidator,
+    categoryIdValidator,
+    productIdValidator
 }
