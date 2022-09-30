@@ -7,7 +7,7 @@ const { validateFields } = require('../middlewares');
 
 const router = Router();
 
-router.get('/:collection/:query',[   
+router.get('/:collection/:query',[       
     check('query','Search query is required').not().isEmpty(), 
     validateFields
 ], search );

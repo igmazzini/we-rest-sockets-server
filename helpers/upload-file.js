@@ -1,9 +1,9 @@
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
-const uploadFile = ( files , allowedExtensions = ['png', 'jpg', 'jpeg', 'pdf', 'txt', 'xlsx'], folder = '') => {
+const uploadFile = ({ files, allowedExtensions = ['png', 'jpg', 'jpeg', 'pdf', 'txt', 'xlsx'], folder = ''}) => {
 
-
+   
     return new Promise((resolve, reject) => {
 
         const { file } = files;      
@@ -29,7 +29,7 @@ const uploadFile = ( files , allowedExtensions = ['png', 'jpg', 'jpeg', 'pdf', '
                 return reject(err.toString());
             }
 
-            resolve(`File uploaded successfully`);
+            resolve(tempName);
             
         });
 

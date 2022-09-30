@@ -44,6 +44,9 @@ const  ProductSchema = Schema({
     },
     description:{
         type:String,        
+    },
+    img:{
+        type:String,        
     }
    
 });

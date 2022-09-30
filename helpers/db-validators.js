@@ -47,6 +47,16 @@ const productIdValidator = async( id = '') => {
     }
 
 }
+const allowedCollections = async(collection = '', collections = []) => {   
+
+    if( !collections.includes(collection) ){
+        throw new Error(`Collection: '${collection}' is not allowed, allowed collections: ${collections}`);
+    }
+    
+
+}
+
+
 
 
 
@@ -57,5 +67,6 @@ module.exports = {
     emailValidator,
     userIdValidator,
     categoryIdValidator,
-    productIdValidator
+    productIdValidator,
+    allowedCollections
 }
