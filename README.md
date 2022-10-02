@@ -1,5 +1,5 @@
-# WebServer + RestServer
+# WebServer + RestServer + Sockets
 
-Base de rest server en node
+Web ,Rest and Sockets server en node
 
 npm install
