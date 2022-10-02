@@ -10,7 +10,27 @@
 </head>
 <body class="container">
     
-    <h1 class="mt-5">Chat</h1>
+    <div class="row mt-5">
+        <div class="col-sm-6">
+            <h3>Enviar mensaje</h3>
+            <hr>
+            <input type="text" id="txtUid" class="form-control mb-2" placeholder="Uid" autocomplete="of">
+            <input type="text" id="txtMsg" class="form-control mb-2" placeholder="Mensaje" autocomplete="of">
+            <h3>Usuarios</h3>
+            <hr>
+            <ul id="ulUsers">
+
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <h3>Chat</h3>
+            <hr>
+            <ul id="ulMsg">
+
+            </ul>
+        </div>
+        <button id="btnOut" class="btn btn-outline-danger">Logout</button>
+    </div>
     
     <script src="./socket.io/socket.io.js"></script>
     <script src="./js/chat.js"></script>

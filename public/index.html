@@ -15,7 +15,7 @@
     <!-- data-login_uri="https://your.domain/your_login_endpoint" -->
     <div class="row mt-4">
         <div class="col-sm-6">
-            <h1>Google Signin</h1>
+            <h2>Google Signin</h2>
             <hr>
             <div class="mt-4" id="g_id_onload"
                 data-client_id="279693859280-hhmu7uu60rbdtr6vof68hfodaegm28ih.apps.googleusercontent.com"
@@ -31,63 +31,25 @@
 
         </div>
         <div class="col-sm-6">
-            <a class="btn btn-success" href="./chat.html" target="_blank" rel="noopener noreferrer">Chat</a>
+            <h2>Custom Signin</h2>
+            <hr>
+            <form action="" class="d-grid">
+                <input type="text" placeholder="Email" name="email" class="form-control mb-2">
+                <input type="text" placeholder="Password" name="password" class="form-control mb-2">
+                <button id="customSignin" class="btn btn-primary mt-3" type="submit">
+                    Sign in
+                </button>
+            </form>
+           
+            <!-- <a class="btn btn-success" href="./chat.html" target="_blank" rel="noopener noreferrer">Chat</a> -->
         </div>
     </div>
 
 
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="./js/auth.js"></script>
 
-    <script>
-        function handleCredentialResponse(response) {
-            // decodeJwtResponse() is a custom function defined by you
-            // to decode the credential response.
-            /* const responsePayload = decodeJwtResponse(response.credential);
-
-            console.log("ID: " + responsePayload.sub);
-            console.log('Full Name: ' + responsePayload.name);
-            console.log('Given Name: ' + responsePayload.given_name);
-            console.log('Family Name: ' + responsePayload.family_name);
-            console.log("Image URL: " + responsePayload.picture);
-            console.log("Email: " + responsePayload.email); */
-
-            //console.log('ID TOKEN',response.credential)
-
-            let myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-
-            const requestParams = {
-                method: 'POST',
-                headers: myHeaders,
-                body: JSON.stringify({ id_token: response.credential })
-            }
-
-            let url = (window.location.hostname.includes('localhost'))
-                ? 'http://localhost:8081/api/auth/google'
-                : 'https://ig-node-restserver.herokuapp.com/api/auth/google'
-
-            const request = new Request(url, requestParams);
-
-            fetch(request)
-                .then(resp => resp.json())
-                .then(resp => {
-                    console.log(resp);
-                    localStorage.setItem('email', resp.user.email);
-                })
-                .catch(console.warn);
-        }
-
-        const button = document.getElementById('signout');
-        button.onclick = () => {
-            google.accounts.id.disableAutoSelect();
-
-            google.accounts.id.revoke(localStorage.getItem('email'), done => {
-                localStorage.clear();
-                location.reload();
-            });
-        }
-    </script>
 </body>
 
 </html>
