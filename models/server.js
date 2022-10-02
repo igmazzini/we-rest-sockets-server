@@ -4,6 +4,7 @@ const cors = require('cors');
 const router = require('../routes/user');
 const { dbConnection } = require('../database/config');
 const fileUpload = require('express-fileupload');
+const { socketsController } = require('../controllers/sockets/socket');
 
 class Server {
 
@@ -12,6 +13,10 @@ class Server {
        this.port = process.env.PORT;
 
        this.app = express();
+
+       this.server = require('http').createServer(this.app);
+
+       this.io = require('socket.io')(this.server);
 
        //Routes path 
        this.paths = {
@@ -33,6 +38,10 @@ class Server {
 
        //Rutas
        this.routes();     
+
+
+       //Sockets
+       this.sockets();
         
 
     }
@@ -74,9 +83,15 @@ class Server {
     }  
 
 
+    sockets(){
+
+        this.io.on("connection", socketsController );
+    }
+
+
     init(){
 
-        this.app.listen(this.port, () =>{
+        this.server.listen(this.port, () =>{
             console.log(`Server in port ${this.port}`);
         });
         
